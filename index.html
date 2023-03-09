@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS buoi 9-10</title>
+    <!-- Link Font-awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+        integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Link CSS BOOTSTRAP -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+
+</head>
+
+<body class="bg-dark-subtle">
+    <div class="container bg-light form-control">
+        <div class="header">
+            <div class="row my-3">
+                <div class="col">
+                    <h3>Danh sách nhân viên</h3>
+                </div>
+                <div class="col text-end">
+                    <button id="btnThemNhanVien" class="btn btn-primary" data-bs-toggle="modal"
+                        data-bs-target="#exampleModal">Thêm nhân viên</button>
+                </div>
+            </div>
+        </div>
+        <div class="content">
+            <div class="content-search">
+                <input class="form-control" placeholder="Loại nhân viên" type="text">
+            </div>
+            <table class="table table-bordered text-center">
+                <thead>
+                    <tr>
+                        <th>Tài khoản</th>
+                        <th>Họ và tên</th>
+                        <th>Email</th>
+                        <th>Ngày làm</th>
+                        <th>Chức vụ</th>
+                        <th>Tổng lương</th>
+                        <th>Xếp loại</th>
+
+                    </tr>
+                </thead>
+            </table>
+
+        </div>
+        <!-- MODAL -->
+        <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"
+            data-bs-whatever="@mdo">Open modal for @mdo</button> -->
+
+
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <!-- Modal header -->
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">LOG IN</h1>
+                    </div>
+                    <!-- Modal Body -->
+
+                    <div class="modal-body">
+                        <form style=>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <div class="input-group-text icon">
+                                        <span><i class="fa fa-user"></i></span>
+                                    </div>
+                                    <input class="form-control" type="text" placeholder="Tài khoản">
+                                </div>
+                                <!-- Span báo lỗi khi nhập sai-->
+                                <span></span>
+                            </div>
+
+                            <div class="form-group mt-3">
+                                <div class="input-group">
+                                    <div class="input-group-text icon">
+                                        <span><i class="fa fa-address-book"></i></span>
+                                    </div>
+                                    <input class="form-control" type="text" placeholder="Họ và tên">
+                                </div>
+                                <!-- Span báo lỗi khi nhập sai-->
+                                <span></span>
+                            </div>
+
+                            <div class="form-group mt-3">
+                                <div class="input-group">
+                                    <div class="input-group-text icon">
+                                        <span><i class="fa fa-envelope"></i></span>
+                                    </div>
+                                    <input class="form-control" type="text" placeholder="Email">
+                                </div>
+                                <!-- Span báo lỗi khi nhập sai-->
+                                <span></span>
+                            </div>
+
+                            <div class="form-group mt-3">
+                                <div class="input-group">
+                                    <div class="input-group-text icon">
+                                        <span><i class="fa fa-key"></i></span>
+                                    </div>
+                                    <input class="form-control" type="text" placeholder="Mật khẩu">
+                                </div>
+                                <!-- Span báo lỗi khi nhập sai-->
+                                <span></span>
+                            </div>
+
+                            <div class="form-group mt-3">
+                                <div class="input-group">
+                                    <div class="input-group-text icon">
+                                        <span><i class="fa fa-calendar"></i></span>
+                                    </div>
+                                    <input class="form-control" type="text" placeholder="Ngày làm">
+                                </div>
+                                <!-- Span báo lỗi khi nhập sai-->
+                                <span></span>
+                            </div>
+
+                            <div class="form-group mt-3">
+                                <div class="input-group">
+                                    <div class="input-group-text icon">
+                                        <span><i class="fa fa-money-bill-alt"></i></span>
+                                    </div>
+                                    <input class="form-control" type="text" placeholder="Lương cơ bản">
+                                </div>
+                                <!-- Span báo lỗi khi nhập sai-->
+                                <span></span>
+                            </div>
+
+                            <div class="form-group mt-3">
+                                <div class="input-group">
+                                    <div class="input-group-text icon">
+                                        <span><i class="fa fa-briefcase"></i></span>
+                                    </div>
+                                    <select class="form-control" id="">
+                                        <option value="">Chọn chức vụ</option>
+                                        <option value="">Giám đốc</option>
+                                        <option value="">Trưởng phòng</option>
+                                        <option value="">Nhân viên</option>
+                                    </select>
+                                </div>
+                                <!-- Span báo lỗi khi nhập sai-->
+                                <span></span>
+                            </div>
+
+                            <div class="form-group mt-3">
+                                <div class="input-group">
+                                    <div class="input-group-text">
+                                        <span><i class="fa fa-clock"></i></span>
+                                    </div>
+                                    <input class="form-control" type="text" placeholder="Giờ làm">
+                                </div>
+                                <!-- Span báo lỗi khi nhập sai-->
+                                <span></span>
+                            </div>
+
+                        </form>
+                    </div>
+                    <!-- Modal Footer -->
+                    <div class="modal-footer">
+                        <button id="btn-them-nhan-vien" type="button" class="btn btn-primary">Thêm người dùng</button>
+                        <button id="btn-cap-nhat" type="button" class="btn btn-primary">Cập nhật</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- Link CDN Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+        crossorigin="anonymous"></script>
+    <!-- Link Js util Validation -->
+    <script src="./util/Validation.js"></script>
+    <!-- Link JS models prototype -->
+    <script src="./models/NhanVien.js"></script>
+    <!-- Link Js controllers -->
+    <script src="./controllers/index.js"></script>
+</body>
+
+</html>
