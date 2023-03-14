@@ -32,7 +32,7 @@
             </div>
         </div>
         <div class="content">
-            <div class="content-search">
+            <div class="content-search mb-3">
                 <input id="txtTuKhoa" class="form-control" placeholder="Loại nhân viên" type="text">
             </div>
             <table class="table table-bordered text-center">
@@ -76,7 +76,7 @@
                                     <input id="taiKhoan" class="form-control" type="text" placeholder="Tài khoản">
                                 </div>
                                 <!-- Div báo lỗi khi nhập sai-->
-                                <div class="text-danger" id="error-required-taiKhoan"></div>
+                                <div class="text-danger error" id="error-required-taiKhoan"></div>
                                 <!-- <div class="text-danger" id="error-kySo-taiKhoan"></div> -->
                             </div>
 
@@ -88,7 +88,7 @@
                                     <input id="hoTen" class="form-control" type="text" placeholder="Họ và tên">
                                 </div>
                                 <!-- Div báo lỗi khi nhập sai-->
-                                <div class="text-danger" id="error-required-hoTen"></div>
+                                <div class="text-danger error" id="error-required-hoTen"></div>
                             </div>
 
                             <div class="form-group mt-3">
@@ -99,7 +99,7 @@
                                     <input id="email" class="form-control" type="text" placeholder="Email">
                                 </div>
                                 <!-- Div báo lỗi khi nhập sai-->
-                                <div class="text-danger" id="error-required-email"></div>
+                                <div class="text-danger error" id="error-required-email"></div>
                             </div>
 
                             <div class="form-group mt-3">
@@ -107,23 +107,23 @@
                                     <div class="input-group-text icon">
                                         <span><i class="fa fa-key"></i></span>
                                     </div>
-                                    <input id="matKhau" class="form-control" type="text" placeholder="Mật khẩu">
+                                    <input id="matKhau" class="form-control" type="password" placeholder="Mật khẩu">
                                 </div>
                                 <!-- Div báo lỗi khi nhập sai-->
-                                <div class="text-danger" id="error-required-matKhau"></div>
+                                <div class="text-danger error" id="error-required-matKhau"></div>
                             </div>
 
                             <div class="form-group mt-3">
                                 <div class="input-group">
-                                    <div class="input-group-text icon">
-                                        <span><i class="fa fa-calendar"></i></span>
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fa fa-calendar"></i></span>
                                     </div>
-                                    <input id="ngayLam" class="form-control" placeholder="Ngày làm" type="text" name="date" onfocus="(this.type='date')" onblur="if (!this.value) this.type='text'">
-                                    <!-- <input type="text" id="datepicker" > -->
+                                    <input id="datepicker" type="text" placeholder="Ngày làm">
                                 </div>
-                                <!-- Div báo lỗi khi nhập sai-->
-                                <div class="text-danger" id="error-required-ngayLam"></div>
+                                <!-- Div báo lỗi khi nhập sai -->
+                                <div class="text-danger error" id="error-required-ngayLam"></div>
                             </div>
+
 
                             <div class="form-group mt-3">
                                 <div class="input-group">
@@ -133,7 +133,7 @@
                                     <input id="luongCoBan" class="form-control" type="text" placeholder="Lương cơ bản">
                                 </div>
                                 <!-- Div báo lỗi khi nhập sai-->
-                                <div class="text-danger" id="error-required-luongCoBan"></div>
+                                <div class="text-danger error" id="error-required-luongCoBan"></div>
                             </div>
 
                             <div class="form-group mt-3">
@@ -149,7 +149,7 @@
                                     </select>
                                 </div>
                                 <!-- Div báo lỗi khi nhập sai-->
-                                <div class="text-danger" id="error-required-chucVu"></div>
+                                <div class="text-danger error" id="error-required-chucVu"></div>
                             </div>
 
                             <div class="form-group mt-3">
@@ -160,7 +160,7 @@
                                     <input id="gioLam" class="form-control" type="text" placeholder="Giờ làm">
                                 </div>
                                 <!-- Div báo lỗi khi nhập sai-->
-                                <div class="text-danger" id="error-required-gioLam"></div>
+                                <div class="text-danger error" id="error-required-gioLam"></div>
                             </div>
 
                         </form>
@@ -194,7 +194,7 @@
     <script>
         $(function () {
             $("#datepicker").datepicker({
-                dateFormat: "yy-mm-dd"
+                dateFormat: "mm-dd-yy"
             });
         });
     </script>

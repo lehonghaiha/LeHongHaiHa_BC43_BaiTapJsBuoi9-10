@@ -93,7 +93,9 @@ function Validation() {
     };
     this.kiemTraTonTai = function (value,arr,tagName,idError,name){
         var output = true;
-        
+        if (document.getElementById(idError).innerHTML) {
+            return;
+        }
         for (var index = 0; index < arr.length;index++){
             if (value === arr[index][tagName]){
                 output = false;
@@ -105,12 +107,8 @@ function Validation() {
         }
         return output;
     }
-    this.kiemTraMatKhau = function (value, idError, minLength, maxLength) {
-        // var regexPassword = /^(?=.*[0-9])(?=.*[A-Z])(?=.*[!@#\$%\^&\*])$/
-        // /^(?=.*\d)(?=.*[A-Z])(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?])[^\s]{6,10}$/;
-        // var regexPassword =  /[-`!@#$%^&()*_=+|\./[\]{}'";:?>,<]+$/; Đúng nè
-        // var regexPassword = /^(?=.*\d)(?=.*[A-Z])(?=.*[!@#$%^&*]).{2,}$/
-        var regexPassword = /^(?=.*\d)(?=.*[A-Z])(?=.*[-`!@#$%^&()*_=+|\./[\]{}'";:?>,<]).{2,}$/;
+    this.kiemTraMatKhau = function (value, idError, minLength, maxLength) {        
+        var regexPassword = /^(?=.*\d)(?=.*[A-Z])(?=.*[-`!@#$%~^&()*_=+|\./[\]{}'";:?>,<]).{2,}$/;
         //Kiểm tra xem có đang hiển thị lỗi bỏ trống hay không  
         if (document.getElementById(idError).innerHTML) {
             return;
@@ -124,10 +122,22 @@ function Validation() {
                 return true ;
             }
         } else {
-            document.getElementById(idError).innerHTML = 'Mật khẩu không hợp lệ! Phải chứa 1 ký số, 1 ký tự in hoa, 1 ký tự đặc biệt';
+            document.getElementById(idError).innerHTML = 'Mật khẩu phải chứa ít nhất 1 ký số, 1 ký tự in hoa, 1 ký tự đặc biệt';
             return false;
         }
 
     };
+    this.kiemTraNgayThang = function (value,idError){
+        if (document.getElementById(idError).innerHTML) {
+            return;
+        }
+        var regexDate =/^(0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])[- /.](19|20)\d\d+$/;
+        if (regexDate.test(value)){
+            document.getElementById(idError).innerHTML = '';
+            return true;
+        } else {
+            document.getElementById(idError).innerHTML = `Ngày làm phải có định dạng là mm-dd-yyyy`;
+        }
+    }
 
 }

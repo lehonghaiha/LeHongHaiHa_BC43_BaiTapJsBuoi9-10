@@ -19,7 +19,7 @@ function NhanVien() {
         } else if (this.chucVu === 'Trưởng phòng') {
             tongLuong = this.luongCoBan*2;
         } else if(this.chucVu==='Nhân viên'){
-            tongLuong = this.luongCoBan;
+            tongLuong = this.luongCoBan*1;
         }
         return tongLuong;
     }

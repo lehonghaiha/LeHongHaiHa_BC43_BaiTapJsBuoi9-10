@@ -6,9 +6,12 @@
     3. Khi Sửa và cập nhật, hoặc thêm nhân viên mới thì thông tin người dùng nhập vào lưu lại trên input. Tìm cách xóa khi người dùng thực hiện việc cập nhật ( trường hợp thêm nhân viên mới thì không cần xóa trắng) - không cần thiết
     4. Mật khẩu chưa validation được - done
     5. Pending ngày làm - done
-    6. Lương cơ bản chưa chuyển được sang LocalString.
-    7. Thêm tính năng so sánh "TÀI KHOẢN" khi thêm 1 nhân viên mới, tài khoản không được trùng nhau
-    8. Hàm check họ tên đang khong cho gõ unicode
+    6. Lương cơ bản chưa chuyển được sang LocalString. --- DONE
+    7. Thêm tính năng so sánh "TÀI KHOẢN" khi thêm 1 nhân viên mới, tài khoản không được trùng nhau - DOne
+    8. Hàm check họ tên đang khong cho gõ unicode - Done
+    9. Nút cập nhật nếu được thì thêm tính năng đóng khi cập nhật thành công
+    10. Khi màn hình đang hiện lỗi, đóng modal thì khi thêm mới nhân viên sẽ hiển thị lỗi cũ của tính năng cập nhật ---- DONE
+    11. Chưa xử lý mật khẩu **** --- DONE
 */
 
 var mangNhanVien = [];
@@ -21,14 +24,24 @@ document.querySelector('#btn-dong').onclick = function () {
     document.querySelector('#taiKhoan').disabled = false;
     document.querySelector('#btn-them-nhan-vien').disabled = false;
     document.querySelector('#btn-cap-nhat').disabled = false;
+    //Test chức năng đóng modal thì reset hết các lỗi thông báo
+    document.getElementById('error-required-taiKhoan').innerHTML = '';
+    document.getElementById('error-required-hoTen').innerHTML = '';
+    document.getElementById('error-required-email').innerHTML = '';
+    document.getElementById('error-required-matKhau').innerHTML = '';
+    document.getElementById('error-required-ngayLam').innerHTML = '';
+    document.getElementById('error-required-luongCoBan').innerHTML = '';
+    document.getElementById('error-required-chucVu').innerHTML = '';
+    document.getElementById('error-required-gioLam').innerHTML = '';
 }
-document.querySelector('#btn-them-nhan-vien').onclick = function () {    
+document.querySelector('#btn-them-nhan-vien').onclick = function () {
     var nv = new NhanVien();
+    console.log(nv);
     nv.taiKhoan = document.querySelector('#taiKhoan').value;
     nv.hoTen = document.querySelector('#hoTen').value;
     nv.email = document.querySelector('#email').value;
     nv.matKhau = document.querySelector('#matKhau').value;
-    nv.ngayLam = document.querySelector('#ngayLam').value;
+    nv.ngayLam = document.querySelector('#datepicker').value;
     nv.luongCoBan = document.querySelector('#luongCoBan').value;
     nv.chucVu = document.querySelector('#chucVu').value;
     nv.gioLam = document.querySelector('#gioLam').value;
@@ -49,19 +62,7 @@ document.querySelector('#btn-them-nhan-vien').onclick = function () {
     //Kiểm tra tài khoản 4-6 ký số
     valid = valid & kiemTra.kiemTraKySo(nv.taiKhoan, 'error-required-taiKhoan', 'Tài khoản', 4, 6);
     // Kiểm tra số taiKhoan khi thêm mới không được trùng với tài khoản đã có trong table
-    // valid = valid & kiemTra.kiemTraTonTai(nv.taiKhoan,mangNhanVien,'error-required-taiKhoan','Tài khoản');
-    valid = valid & kiemTra.kiemTraTonTai(nv.taiKhoan,mangNhanVien,'taiKhoan','error-required-taiKhoan','Tài khoản');
-    // for (var index = 0; index < mangNhanVien.length; index++){
-    //     if (nv.taiKhoan === mangNhanVien[index].taiKhoan){
-    //         document.getElementById('error-required-taiKhoan').innerHTML = 'Tài khoản đã tồn tại!';
-    //         valid = false;
-    //         break;
-    //     } else {
-    //         document.getElementById('error-required-taiKhoan').innerHTML = '';
-    //     };
-        
-    // }
-    
+    valid = valid & kiemTra.kiemTraTonTai(nv.taiKhoan, mangNhanVien, 'taiKhoan', 'error-required-taiKhoan', 'Tài khoản');
     // Kiểm tra tên nhân viên (phải là chữ, không để trống)
     valid = valid & kiemTra.kiemTraKyTu(nv.hoTen, 'error-required-hoTen', 'Họ tên');
     //Kiểm tra email - đúng định dạng
@@ -69,6 +70,7 @@ document.querySelector('#btn-them-nhan-vien').onclick = function () {
     // Kiểm tra mật khẩu (4-6 ký tự, chứa ít nhất 1 số, 1 in hoa, 1 đặc biệt và không trống)
     valid = valid & kiemTra.kiemTraMatKhau(nv.matKhau, 'error-required-matKhau', 6, 10);
     // kiểm tra ngày làm ( không để trống, định dạng mm/dd/yyyy)
+    valid = valid & kiemTra.kiemTraNgayThang(nv.ngayLam,'error-required-ngayLam');
     // Kiểm tra lương cơ bản (1 triệu đến 20 triệu, không để trống)
     valid = valid & kiemTra.kiemTraGiaTri(Number(nv.luongCoBan), 'error-required-luongCoBan', 'lương cơ bản', 1e+6, 20e+6);
     //Kiểm tra chức vụ chọn phải hợp lệ    
@@ -78,9 +80,8 @@ document.querySelector('#btn-them-nhan-vien').onclick = function () {
         return;
     };
 
-
-
     mangNhanVien.push(nv);
+    console.log(mangNhanVien);
     renderTableNhanVien(mangNhanVien);
     luuLocalStore();
 }
@@ -145,20 +146,23 @@ function xoaNhanVien(taiKhoanCanXoa) {
 function layThongTin(taiKhoanCanSua) {
     document.querySelector('#taiKhoan').disabled = true;
     document.querySelector('#btn-them-nhan-vien').disabled = true;
+    // console.log(mangNhanVien[1].gioLam);
     for (var index = 0; index < mangNhanVien.length; index++) {
         if (mangNhanVien[index].taiKhoan === taiKhoanCanSua) {
+            console.log('In mảng nhân viên: ', mangNhanVien);
             document.querySelector('#taiKhoan').value = mangNhanVien[index].taiKhoan;
             document.querySelector('#hoTen').value = mangNhanVien[index].hoTen;
             document.querySelector('#email').value = mangNhanVien[index].email;
             document.querySelector('#matKhau').value = mangNhanVien[index].matKhau;
-            document.querySelector('#ngayLam').value = mangNhanVien[index].ngayLam;
+            document.querySelector('#datepicker').value = mangNhanVien[index].ngayLam;
             document.querySelector('#luongCoBan').value = mangNhanVien[index].luongCoBan;
             document.querySelector('#chucVu').value = mangNhanVien[index].chucVu;
             document.querySelector('#gioLam').value = mangNhanVien[index].gioLam;
+
             break;
         }
     }
-}
+};
 
 //Xử lý btn Cập nhật thông tin
 document.querySelector('#btn-cap-nhat').onclick = function () {
@@ -168,7 +172,7 @@ document.querySelector('#btn-cap-nhat').onclick = function () {
     thongTinEdit.hoTen = document.querySelector('#hoTen').value;
     thongTinEdit.email = document.querySelector('#email').value;
     thongTinEdit.matKhau = document.querySelector('#matKhau').value;
-    thongTinEdit.ngayLam = document.querySelector('#ngayLam').value;
+    thongTinEdit.ngayLam = document.querySelector('#datepicker').value;
     thongTinEdit.luongCoBan = document.querySelector('#luongCoBan').value;
     thongTinEdit.chucVu = document.querySelector('#chucVu').value;
     thongTinEdit.gioLam = document.querySelector('#gioLam').value;
@@ -197,6 +201,7 @@ document.querySelector('#btn-cap-nhat').onclick = function () {
     // Kiểm tra mật khẩu (4-6 ký tự, chứa ít nhất 1 số, 1 in hoa, 1 đặc biệt và không trống)
     valid = valid & kiemTra.kiemTraMatKhau(thongTinEdit.matKhau, 'error-required-matKhau', 6, 10);
     // kiểm tra ngày làm ( không để trống, định dạng mm/dd/yyyy)
+    valid = valid & kiemTra.kiemTraNgayThang(thongTinEdit.ngayLam,'error-required-ngayLam');
     // Kiểm tra lương cơ bản (1 triệu đến 20 triệu, không để trống)
     valid = valid & kiemTra.kiemTraGiaTri(Number(thongTinEdit.luongCoBan), 'error-required-luongCoBan', 'lương cơ bản', 1e+6, 20e+6);
     //Kiểm tra chức vụ chọn phải hợp lệ    
@@ -212,19 +217,21 @@ document.querySelector('#btn-cap-nhat').onclick = function () {
         if (mangNhanVien[index].taiKhoan === thongTinEdit.taiKhoan) {
             mangNhanVien[index].hoTen = thongTinEdit.hoTen;
             mangNhanVien[index].email = thongTinEdit.email;
+            mangNhanVien[index].matKhau = thongTinEdit.matKhau;
             mangNhanVien[index].ngayLam = thongTinEdit.ngayLam;
+            mangNhanVien[index].luongCoBan = thongTinEdit.luongCoBan;
             mangNhanVien[index].chucVu = thongTinEdit.chucVu;
+            mangNhanVien[index].gioLam = thongTinEdit.gioLam;
+
             mangNhanVien[index].tongLuong = thongTinEdit.tongLuong;
             mangNhanVien[index].xepLoai = thongTinEdit.xepLoai;
             break;
         }
-    }
+    };
 
     renderTableNhanVien(mangNhanVien);
     luuLocalStore();
-    // document.getElementById('btn-cap-nhat').setAttribute("data-bs-dismiss","modal");    
-    // document.querySelector('#taiKhoan').disabled = false;
-    // document.querySelector('#btn-them-nhan-vien').disabled = false;   
+
 
 }
 //Xử lý phần tìm kiếm
@@ -241,7 +248,7 @@ document.querySelector('#txtTuKhoa').oninput = function () {
         }
     }
     renderTableNhanVien(mangNhanVienTimKiem);
-}
+};
 
 // Hàm bỏ dấu
 function stringToSlug(title) {
