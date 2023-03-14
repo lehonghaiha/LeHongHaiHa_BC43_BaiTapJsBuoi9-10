@@ -1,18 +1,3 @@
-/*
-    TRƯỜNG HỢP TỒN ĐỌNG CẦN XỬ LÝ SAU:
-    1. Khi Click btn Chỉnh sửa thông tin => disable 2 trường tài khoản và thêm nhân viên. Tuy nhiên khi không nhấn vào btn cập nhật hoặc đóng mà nhấn vào vùng trống trên màn hình thì hộp thoại MODAL vẫn đóng, 2 trường vẫn đang trạng thái disable.
-    - DONE
-    2. Khi sử dụng tagselectindex => giá trị của text HTML đổi luôn cả các tài khoản 1,2,3,... đằng trước => tạm thời xử lý chuối theo kiểu không đặt value cho option --- so sánh text để lấy ra giá trị tính tổng lương.
-    3. Khi Sửa và cập nhật, hoặc thêm nhân viên mới thì thông tin người dùng nhập vào lưu lại trên input. Tìm cách xóa khi người dùng thực hiện việc cập nhật ( trường hợp thêm nhân viên mới thì không cần xóa trắng) - không cần thiết
-    4. Mật khẩu chưa validation được - done
-    5. Pending ngày làm - done
-    6. Lương cơ bản chưa chuyển được sang LocalString. --- DONE
-    7. Thêm tính năng so sánh "TÀI KHOẢN" khi thêm 1 nhân viên mới, tài khoản không được trùng nhau - DOne
-    8. Hàm check họ tên đang khong cho gõ unicode - Done
-    9. Nút cập nhật nếu được thì thêm tính năng đóng khi cập nhật thành công
-    10. Khi màn hình đang hiện lỗi, đóng modal thì khi thêm mới nhân viên sẽ hiển thị lỗi cũ của tính năng cập nhật ---- DONE
-    11. Chưa xử lý mật khẩu **** --- DONE
-*/
 
 var mangNhanVien = [];
 var kiemTra = new Validation();
